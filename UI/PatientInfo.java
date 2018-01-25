@@ -1,14 +1,248 @@
 package UI;
 
+import base.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 class PatientInfo implements ActionListener {
 
+	private JTabbedPane tabbedPane;
+
+	private JTextField firstNameText = new JTextField();
+	private JTextField middleNameText = new JTextField();
+	private JTextField lastNameText = new JTextField();
+	private JTextField medRecNumText = new JTextField();
+	private JTextField financeNumText = new JTextField();
+	private JTextField socialSecNumText = new JTextField();
+	private JTextField addressText = new JTextField();
+	private JTextField attendingPhysText = new JTextField();
+	private JTextField caringNurseText = new JTextField();
+	private JTextField roomNumText = new JTextField();
+	private JTextField locationText = new JTextField();
+
+	PatientInfo( JTabbedPane tabbedPaneInput,
+			     String      firstNameIn,
+			     String      middleNameIn,
+			     String      lastNameIn,
+			     String      medRecIn,
+			     String      financeNumIn,
+			     String      socialSecIn,
+			     String      addressIn,
+			     String      attendingPhysIn,
+			     String      caringNurseIn,
+			     String      roomNumIn,
+			     String      locationIn ) {
+		this.tabbedPane = tabbedPaneInput;
+
+		setFirstName(firstNameIn);
+		setMiddleName(middleNameIn);
+		setLastName(lastNameIn);
+		setMedRec(medRecIn);
+		setFinanceNum(financeNumIn);
+		setSocialSec(socialSecIn);
+		setAddress(addressIn);
+		setAttendingPhys(attendingPhysIn);
+		setCaringNurse(caringNurseIn);
+		setRoomNum(roomNumIn);
+		setLocation(locationIn);
+	}
+
+	public String getFirstName() {
+		return firstNameText.getText();
+	}
+
+	public void setFirstName(String t) {
+		firstNameText.setText(t);
+	}
+
+	public String getMiddleName() {
+		return middleNameText.getText();
+	}
+
+	public void setMiddleName(String t) {
+		middleNameText.setText(t);
+	}
+
+	public String getLastName() {
+		return lastNameText.getText();
+	}
+
+	public void setLastName(String t) {
+		lastNameText.setText(t);
+	}
+
+	public String getMedRec() {
+		return medRecNumText.getText();
+	}
+
+	public void setMedRec(String t) {
+		medRecNumText.setText(t);
+	}
+
+	public String getFinanceNum() {
+		return financeNumText.getText();
+	}
+
+	public void setFinanceNum(String t) {
+		financeNumText.setText(t);
+	}
+
+	public String getSocialSec() {
+		return socialSecNumText.getText();
+	}
+
+	public void setSocialSec(String t) {
+		socialSecNumText.setText(t);
+	}
+
+	public String getAddress() {
+		return addressText.getText();
+	}
+
+	public void setAddress(String t) {
+		addressText.setText(t);
+	}
+
+	public String getAttendingPhys() {
+		return attendingPhysText.getText();
+	}
+
+	public void setAttendingPhys(String t) {
+		attendingPhysText.setText(t);
+	}
+
+	public String getCaringNurse() {
+		return caringNurseText.getText();
+	}
+
+	public void setCaringNurse(String t) {
+		caringNurseText.setText(t);
+	}
+
+	public String getRoomNum() {
+		return roomNumText.getText();
+	}
+
+	public void setRoomNum(String t) {
+		roomNumText.setText(t);
+	}
+
+	public String getLocation() {
+		return locationText.getText();
+	}
+
+	public void setLocation( String t ) {
+		locationText.setText(t);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Hello World!");
+		JPanel panel_1 = new JPanel();
+
+		panel_1 = new JPanel();
+		tabbedPane.addTab("Patient Information", panel_1);
+		panel_1.setLayout(null);
 		
+		JLabel firstName = new JLabel("First Name");
+		firstName.setBounds(10, 7, 100, 16);
+		panel_1.add(firstName);
+		
+		firstNameText.setBounds(150, 7, 130, 20);
+		panel_1.add(firstNameText);
+		firstNameText.setColumns(10);
+
+		JLabel middleName = new JLabel("Middle Name");
+		middleName.setBounds(10, 32, 100, 16);
+		panel_1.add(middleName);
+		
+		middleNameText.setBounds(150, 32, 130, 20);
+		panel_1.add(middleNameText);
+		middleNameText.setColumns(10);
+
+		JLabel lastName = new JLabel("Last Name");
+		lastName.setBounds(10, 57, 100, 16);
+		panel_1.add(lastName);
+		
+		lastNameText.setBounds(150, 57, 130, 20);
+		panel_1.add(lastNameText);
+		lastNameText.setColumns(10);
+		
+		JLabel medRecNum = new JLabel("Medical Record");
+		medRecNum.setBounds(10, 83, 120, 20);
+		panel_1.add(medRecNum);
+		
+		medRecNumText.setBounds(150, 85, 130, 20);
+		panel_1.add(medRecNumText);
+		medRecNumText.setColumns(10);
+
+		JLabel financeNum = new JLabel("Financial Num");
+		financeNum.setBounds(10, 110, 120, 20);
+		panel_1.add(financeNum);
+		
+		financeNumText.setBounds(150, 110, 130, 20);
+		panel_1.add(financeNumText);
+		financeNumText.setColumns(10);
+
+		JLabel socialSecNum = new JLabel("Social Security");
+		socialSecNum.setBounds(10, 140, 120, 20);
+		panel_1.add(socialSecNum);
+		
+		socialSecNumText.setBounds(150, 140, 130, 20);
+		panel_1.add(socialSecNumText);
+		socialSecNumText.setColumns(10);
+
+		JLabel address = new JLabel("Address");
+		address.setBounds(10, 175, 120, 20);
+		panel_1.add(address);
+		
+		addressText.setBounds(150, 167, 180, 70);
+		panel_1.add(addressText);
+		addressText.setColumns(10);
+
+		JLabel attendingPhys = new JLabel("Attending Phys");
+		attendingPhys.setBounds(10, 250, 120, 20);
+		panel_1.add(attendingPhys);
+		
+		attendingPhysText.setBounds(150, 250, 130, 20);
+		panel_1.add(attendingPhysText);
+		attendingPhysText.setColumns(10);
+
+		JLabel caringNurse = new JLabel("Caring Nurse");
+		caringNurse.setBounds(10, 280, 120, 20);
+		panel_1.add(caringNurse);
+		
+		caringNurseText.setBounds(150, 280, 130, 20);
+		panel_1.add(caringNurseText);
+		caringNurseText.setColumns(10);
+
+		JLabel roomNum = new JLabel("Room Number");
+		roomNum.setBounds(10, 310, 120, 20);
+		panel_1.add(roomNum);
+		
+		roomNumText.setBounds(150, 310, 130, 20);
+		panel_1.add(roomNumText);
+		roomNumText.setColumns(10);
+
+		JLabel location = new JLabel("Location");
+		location.setBounds(10, 340, 120, 20);
+		panel_1.add(location);
+		
+		locationText.setBounds(150, 340, 130, 20);
+		panel_1.add(locationText);
+		locationText.setColumns(10);
+
+		JButton submit = new JButton("Submit Info");
+		submit.setBounds(10, 370, 130, 30);
+		panel_1.add(submit);
 	}
-	
 }

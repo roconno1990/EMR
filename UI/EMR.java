@@ -66,8 +66,10 @@ public class EMR {
       // column tab
       JPanel panel_2 = new JPanel();
       panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-      panel_2.setBounds(30, 90, 190, 900);
+      panel_2.setBounds(30, 67, 190, 900);
+      frame.getContentPane().add(panel_2);
 
+      JButton patSearch = new JButton("Patient Search");
       JButton regInfo = new JButton("Registration");
       JButton patTrack = new JButton("Patient tracker");
       JButton phyExam = new JButton("Physical Exam");
@@ -84,7 +86,8 @@ public class EMR {
       JButton physRep = new JButton("Physician Reports");
       JButton inbox = new JButton("Inbox");
       JButton complaints = new JButton("Complaints");
-      
+
+      panel_2.add(patSearch);
       panel_2.add(regInfo);
       panel_2.add(patTrack);
       panel_2.add(phyExam);
@@ -102,17 +105,25 @@ public class EMR {
       panel_2.add(inbox);
       panel_2.add(complaints);
 
-      frame.getContentPane().add(panel_2);   
-
       JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
       tabbedPane_1.setBounds(220, 67, 1735, 920);
       frame.getContentPane().add(tabbedPane_1);
-      
-      // Row tab
-      JButton btnNewButton = new JButton("");
-      tabbedPane_1.addTab("Visit History", null, btnNewButton, null);
-      
 
-      
+      PatientSearch patientSearch = new PatientSearch( tabbedPane_1 );
+      patSearch.addActionListener(patientSearch);
+
+      PatientInfo patInfAct = new PatientInfo( tabbedPane_1,
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "",
+    		                                   "" );
+      patientInfo.addActionListener(patInfAct);
    }
 }
