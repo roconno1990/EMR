@@ -29,6 +29,7 @@ class PatientInfo implements ActionListener {
 	private JTextField caringNurseText = new JTextField();
 	private JTextField roomNumText = new JTextField();
 	private JTextField locationText = new JTextField();
+	private JTextField patientNumText = new JTextField();
 
 	PatientInfo( JTabbedPane tabbedPaneInput,
 			     String      firstNameIn,
@@ -41,7 +42,8 @@ class PatientInfo implements ActionListener {
 			     String      attendingPhysIn,
 			     String      caringNurseIn,
 			     String      roomNumIn,
-			     String      locationIn ) {
+			     String      locationIn,
+			     String      patientNumIn ) {
 		this.tabbedPane = tabbedPaneInput;
 
 		setFirstName(firstNameIn);
@@ -145,6 +147,14 @@ class PatientInfo implements ActionListener {
 		locationText.setText(t);
 	}
 
+	public String getPatientNum() {
+		return patientNumText.getText();
+	}
+
+	public void setPatientNum(String t) {
+		patientNumText.setText(t);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JPanel panel_1 = new JPanel();
@@ -241,8 +251,194 @@ class PatientInfo implements ActionListener {
 		panel_1.add(locationText);
 		locationText.setColumns(10);
 
-		JButton submit = new JButton("Submit Info");
-		submit.setBounds(10, 370, 130, 30);
-		panel_1.add(submit);
+		JLabel patientNum = new JLabel("Patient Number");
+		patientNum.setBounds(10, 370, 120, 20);
+		panel_1.add(patientNum);
+		
+		patientNumText.setBounds(150, 370, 130, 20);
+		panel_1.add(patientNumText);
+		patientNumText.setColumns(10);
+
+		JButton create = new JButton("Create Info");
+		create.setBounds(10, 400, 130, 30);
+		panel_1.add(create);
+
+		CreatePatientInfo createPatientInfo =
+	        new CreatePatientInfo( firstNameText,
+	        		               middleNameText,
+	        		               lastNameText,
+	        		               medRecNumText,
+	        		               financeNumText,
+	        		               socialSecNumText,
+	        		               addressText,
+	        		               attendingPhysText,
+	        		               caringNurseText,
+	        		               roomNumText,
+	        		               locationText,
+	        		               patientNumText );
+
+		create.addActionListener(createPatientInfo);
+
+		JButton update = new JButton("Update Info");
+		update.setBounds(150, 400, 130, 30);
+		panel_1.add(update);
+
+		CreatePatientInfo updatePatientInfo =
+		        new CreatePatientInfo( firstNameText,
+		        		               middleNameText,
+		        		               lastNameText,
+		        		               medRecNumText,
+		        		               financeNumText,
+		        		               socialSecNumText,
+		        		               addressText,
+		        		               attendingPhysText,
+		        		               caringNurseText,
+		        		               roomNumText,
+		        		               locationText,
+		        		               patientNumText );
+
+		update.addActionListener(updatePatientInfo);
 	}
+}
+
+class UpdatePatientInfo implements ActionListener {
+
+	private JTextField firstName;
+	private JTextField middleName;
+	private JTextField lastName;
+	private JTextField medRecNum;
+	private JTextField financeNum;
+	private JTextField socialSecNum;
+	private JTextField address;
+	private JTextField attendingPhys;
+	private JTextField caringNurse;
+	private JTextField roomNum;
+	private JTextField location;
+	private JTextField patientNum;
+
+	UpdatePatientInfo( JTextField  firstNameIn,
+			           JTextField  middleNameIn,
+			           JTextField  lastNameIn,
+			           JTextField  medRecNumIn,
+			           JTextField  financeNumIn,
+			           JTextField  socialSecIn,
+			           JTextField  addressIn,
+			           JTextField  attendingPhysIn,
+			           JTextField  caringNurseIn,
+			           JTextField  roomNumIn,
+			           JTextField  locationIn,
+			           JTextField  patientNumIn ) {
+
+		firstName = firstNameIn;
+		middleName = middleNameIn;
+		lastName = lastNameIn;
+		medRecNum = medRecNumIn;
+		financeNum = financeNumIn;
+		socialSecNum = socialSecIn;
+		address = addressIn;
+		attendingPhys = attendingPhysIn;
+		caringNurse = caringNurseIn;
+		roomNum = roomNumIn;
+		location = locationIn;
+		patientNum = patientNumIn;
+	}
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		DBConnect con = new DBConnect();
+		DBBase data = new DBBase();
+
+		con.initialise("root", "offspring1");
+
+		Map<String, Object> keyMap = new HashMap<String, Object>();
+		keyMap.put("patient_id", patientNum.getText());
+
+		Map<String, Object> updateMap = new HashMap<String, Object>();		
+		updateMap.put("update_time", data.getCurrentTimeStamp());
+		updateMap.put("first_name", firstName.getText());
+		updateMap.put("middle_name", middleName);
+		updateMap.put("last_name", lastName);
+		updateMap.put("med_rec_ref", medRecNum);
+		updateMap.put("finance_ref", financeNum);
+		updateMap.put("social_security", socialSecNum);
+		updateMap.put("address", address);
+		updateMap.put("attending_physician", attendingPhys);
+		updateMap.put("caring_nurse", caringNurse);
+		updateMap.put("room_num", roomNum);
+		updateMap.put("location", location);
+
+		data.update(con.getConnection(), "patient", keyMap, updateMap);
+		
+	}
+	
+}
+
+class CreatePatientInfo implements ActionListener {
+
+	private JTextField firstName;
+	private JTextField middleName;
+	private JTextField lastName;
+	private JTextField medRecNum;
+	private JTextField financeNum;
+	private JTextField socialSecNum;
+	private JTextField address;
+	private JTextField attendingPhys;
+	private JTextField caringNurse;
+	private JTextField roomNum;
+	private JTextField location;
+	private JTextField patientNum;
+
+	CreatePatientInfo( JTextField  firstNameIn,
+			           JTextField  middleNameIn,
+			           JTextField  lastNameIn,
+			           JTextField  medRecNumIn,
+			           JTextField  financeNumIn,
+			           JTextField  socialSecIn,
+			           JTextField  addressIn,
+			           JTextField  attendingPhysIn,
+			           JTextField  caringNurseIn,
+			           JTextField  roomNumIn,
+			           JTextField  locationIn,
+			           JTextField  patientNumIn ) {
+
+		firstName = firstNameIn;
+		middleName = middleNameIn;
+		lastName = lastNameIn;
+		medRecNum = medRecNumIn;
+		financeNum = financeNumIn;
+		socialSecNum = socialSecIn;
+		address = addressIn;
+		attendingPhys = attendingPhysIn;
+		caringNurse = caringNurseIn;
+		roomNum = roomNumIn;
+		location = locationIn;
+		patientNum = patientNumIn;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		DBConnect con = new DBConnect();
+		DBBase data = new DBBase();
+
+		con.initialise("root", "offspring1");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("patient_id", patientNum.getText());
+		map.put("update_time", data.getCurrentTimeStamp());
+		map.put("first_name", firstName.getText());
+		map.put("middle_name", middleName);
+		map.put("last_name", lastName);
+		map.put("med_rec_ref", medRecNum);
+		map.put("finance_ref", financeNum);
+		map.put("social_security", socialSecNum);
+		map.put("address", address);
+		map.put("attending_physician", attendingPhys);
+		map.put("caring_nurse", caringNurse);
+		map.put("room_num", roomNum);
+		map.put("location", location);
+		
+		data.insert(con.getConnection(), "patient", map);
+	}
+	
 }
