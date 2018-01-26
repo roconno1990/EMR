@@ -2,6 +2,10 @@ package UI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -49,7 +53,7 @@ class PatientSearch implements ActionListener {
 		submit.setBounds(10, 32, 130, 30);
 		panel_1.add(submit);
 
-		GoGetPatient goGet = new GoGetPatient( tabbedPane, getPatientId() );
+		GoGetPatient goGet = new GoGetPatient( tabbedPane, patientSearchText );
 		submit.addActionListener( goGet );
 		
 	}
@@ -58,10 +62,10 @@ class PatientSearch implements ActionListener {
 class GoGetPatient implements ActionListener {
 
 	private JTabbedPane tabbedPane;
-	private String      patientNumber;
+	private JTextField  patientNumber;
 
 	GoGetPatient ( JTabbedPane tabbedPaneInput,
-			       String      patientNumIn ) {
+			       JTextField  patientNumIn ) {
 		tabbedPane = tabbedPaneInput;
 		patientNumber = patientNumIn;
 	}
@@ -70,12 +74,16 @@ class GoGetPatient implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		DBConnect con = new DBConnect();
 		DBBase data = new DBBase();
-		JPanel panel_1 = new JPanel();
 
-		panel_1 = new JPanel();
+		Map<String, Object> keyMap = new HashMap<String, Object>();
+		keyMap.put("patient_id", patientNumber.getText());
 
-		
-
+		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+		rows = data.retrieve(con.getConnection(), "patient", keyMap);
+        if( rows.size() > 0 ) {
+        	// TODO - grab patient information, create a view patient button that will pass in string
+        	// values to PatientInfo to populate a PatientInfo object and tab.
+        }
 		
 	}
 }
