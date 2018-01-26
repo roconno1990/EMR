@@ -57,6 +57,7 @@ class PatientInfo implements ActionListener {
 		setCaringNurse(caringNurseIn);
 		setRoomNum(roomNumIn);
 		setLocation(locationIn);
+		setPatientNum(patientNumIn);
 	}
 
 	public String getFirstName() {
