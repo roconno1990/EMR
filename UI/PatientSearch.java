@@ -53,7 +53,7 @@ class PatientSearch implements ActionListener {
 		submit.setBounds(10, 32, 130, 30);
 		panel_1.add(submit);
 
-		GoGetPatient goGet = new GoGetPatient( tabbedPane, patientSearchText );
+		GoGetPatient goGet = new GoGetPatient( tabbedPane, panel_1, patientSearchText );
 		submit.addActionListener( goGet );
 		
 	}
@@ -63,10 +63,13 @@ class GoGetPatient implements ActionListener {
 
 	private JTabbedPane tabbedPane;
 	private JTextField  patientNumber;
+	private JPanel      panel;
 
 	GoGetPatient ( JTabbedPane tabbedPaneInput,
+			       JPanel      panelIn,
 			       JTextField  patientNumIn ) {
 		tabbedPane = tabbedPaneInput;
+		panel = panelIn;
 		patientNumber = patientNumIn;
 	}
 
@@ -75,14 +78,34 @@ class GoGetPatient implements ActionListener {
 		DBConnect con = new DBConnect();
 		DBBase data = new DBBase();
 
+		con.initialise("root", "offspring1");
+
 		Map<String, Object> keyMap = new HashMap<String, Object>();
 		keyMap.put("patient_id", patientNumber.getText());
 
 		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 		rows = data.retrieve(con.getConnection(), "patient", keyMap);
         if( rows.size() > 0 ) {
-        	// TODO - grab patient information, create a view patient button that will pass in string
-        	// values to PatientInfo to populate a PatientInfo object and tab.
+        	
+        	JButton view = new JButton("View Result");
+    		view.setBounds(150, 32, 130, 30);
+    		panel.add(view);
+
+    		PatientInfo patInfAct =
+    		    new PatientInfo( tabbedPane,
+    		    		         (String)rows.get(0).get("first_name"),
+    		    		         (String)rows.get(0).get("middle_name"),
+    		    		         (String)rows.get(0).get("last_name"),
+    		    		         (String)rows.get(0).get("med_rec_ref"),
+    		    		         (String)rows.get(0).get("finance_ref"),
+    		    		         (String)rows.get(0).get("social_Security"),
+    		    		         (String)rows.get(0).get("address"),
+    		    		         (String)rows.get(0).get("attending_physician"),
+    		    		         (String)rows.get(0).get("caring_nurse"),
+    		    		         (String)rows.get(0).get("room_num"),
+    		    		         (String)rows.get(0).get("location"),
+    		    		         (String)rows.get(0).get("patient_id") );
+    		view.addActionListener(patInfAct);
         }
 		
 	}

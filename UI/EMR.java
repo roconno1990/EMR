@@ -123,6 +123,7 @@ public class EMR {
     		                                   "",
     		                                   "",
     		                                   "",
+    		                                   "",
     		                                   "" );
       patientInfo.addActionListener(patInfAct);
    }
