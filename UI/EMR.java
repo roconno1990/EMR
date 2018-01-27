@@ -70,6 +70,7 @@ public class EMR {
       frame.getContentPane().add(panel_2);
 
       JButton patSearch = new JButton("Patient Search");
+      JButton visit = new JButton("Visit");
       JButton regInfo = new JButton("Registration");
       JButton patTrack = new JButton("Patient tracker");
       JButton phyExam = new JButton("Physical Exam");
@@ -88,6 +89,7 @@ public class EMR {
       JButton complaints = new JButton("Complaints");
 
       panel_2.add(patSearch);
+      panel_2.add(visit);
       panel_2.add(regInfo);
       panel_2.add(patTrack);
       panel_2.add(phyExam);
@@ -111,6 +113,9 @@ public class EMR {
 
       PatientSearch patientSearch = new PatientSearch( tabbedPane_1 );
       patSearch.addActionListener(patientSearch);
+
+      Visit visitAct = new Visit( tabbedPane_1 );
+      visit.addActionListener(visitAct);
 
       PatientInfo patInfAct = new PatientInfo( tabbedPane_1,
     		                                   "",

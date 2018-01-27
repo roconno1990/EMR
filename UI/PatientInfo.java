@@ -358,16 +358,16 @@ class UpdatePatientInfo implements ActionListener {
 		Map<String, Object> updateMap = new HashMap<String, Object>();		
 		updateMap.put("update_time", data.getCurrentTimeStamp());
 		updateMap.put("first_name", firstName.getText());
-		updateMap.put("middle_name", middleName);
-		updateMap.put("last_name", lastName);
-		updateMap.put("med_rec_ref", medRecNum);
-		updateMap.put("finance_ref", financeNum);
-		updateMap.put("social_security", socialSecNum);
-		updateMap.put("address", address);
-		updateMap.put("attending_physician", attendingPhys);
-		updateMap.put("caring_nurse", caringNurse);
-		updateMap.put("room_num", roomNum);
-		updateMap.put("location", location);
+		updateMap.put("middle_name", middleName.getText());
+		updateMap.put("last_name", lastName.getText());
+		updateMap.put("med_rec_ref", medRecNum.getText());
+		updateMap.put("finance_ref", financeNum.getText());
+		updateMap.put("social_security", socialSecNum.getText());
+		updateMap.put("address", address.getText());
+		updateMap.put("attending_physician", attendingPhys.getText());
+		updateMap.put("caring_nurse", caringNurse.getText());
+		updateMap.put("room_num", roomNum.getText());
+		updateMap.put("location", location.getText());
 
 		data.update(con.getConnection(), "patient", keyMap, updateMap);
 		
@@ -428,16 +428,16 @@ class CreatePatientInfo implements ActionListener {
 		map.put("patient_id", patientNum.getText());
 		map.put("update_time", data.getCurrentTimeStamp());
 		map.put("first_name", firstName.getText());
-		map.put("middle_name", middleName);
-		map.put("last_name", lastName);
-		map.put("med_rec_ref", medRecNum);
-		map.put("finance_ref", financeNum);
-		map.put("social_security", socialSecNum);
-		map.put("address", address);
-		map.put("attending_physician", attendingPhys);
-		map.put("caring_nurse", caringNurse);
-		map.put("room_num", roomNum);
-		map.put("location", location);
+		map.put("middle_name", middleName.getText());
+		map.put("last_name", lastName.getText());
+		map.put("med_rec_ref", medRecNum.getText());
+		map.put("finance_ref", financeNum.getText());
+		map.put("social_security", socialSecNum.getText());
+		map.put("address", address.getText());
+		map.put("attending_physician", attendingPhys.getText());
+		map.put("caring_nurse", caringNurse.getText());
+		map.put("room_num", roomNum.getText());
+		map.put("location", location.getText());
 		
 		data.insert(con.getConnection(), "patient", map);
 	}
