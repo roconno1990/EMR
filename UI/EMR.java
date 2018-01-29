@@ -87,12 +87,14 @@ public class EMR {
       JButton physRep = new JButton("Physician Reports");
       JButton inbox = new JButton("Inbox");
       JButton complaints = new JButton("Complaints");
+      JButton allergy = new JButton("Allergies");
 
       panel_2.add(patSearch);
       panel_2.add(visit);
       panel_2.add(regInfo);
       panel_2.add(patTrack);
       panel_2.add(phyExam);
+      panel_2.add(allergy);
       panel_2.add(meds);
       panel_2.add(orders);
       panel_2.add(labRes);
@@ -111,11 +113,17 @@ public class EMR {
       tabbedPane_1.setBounds(220, 67, 1735, 920);
       frame.getContentPane().add(tabbedPane_1);
 
+      Allergies allergies = new Allergies( tabbedPane_1 );
+      allergy.addActionListener(allergies);
+
       PatientSearch patientSearch = new PatientSearch( tabbedPane_1 );
       patSearch.addActionListener(patientSearch);
 
       Visit visitAct = new Visit( tabbedPane_1 );
       visit.addActionListener(visitAct);
+
+      Vitals vitals = new Vitals( tabbedPane_1 );
+      vital.addActionListener(vitals);
 
       PatientInfo patInfAct = new PatientInfo( tabbedPane_1,
     		                                   "",
