@@ -8,7 +8,8 @@ CREATE TABLE USER (
 	creation_time TIMESTAMP,
 	username      VARCHAR(30) not null,
 	password      VARCHAR(30) not null,
-	role          VARCHAR(30) not null );
+	role          VARCHAR(30) not null
+);
 
 drop table if exists VISIT;
 CREATE TABLE VISIT (
@@ -40,4 +41,35 @@ CREATE TABLE PATIENT (
     attending_physician VARCHAR(30),
     caring_nurse        VARCHAR(30),
     room_num            VARCHAR(10),
-    location            VARCHAR(50) );
+    location            VARCHAR(50)
+);
+
+drop table if exists DISCHARGE;
+CREATE TABLE DISCHANGE (
+	update_time TIMESTAMP,
+	MRN         integer PRIMARY KEY not null,
+	discharge   VARCHAR(10),
+	summary     VARCHAR(40)
+);
+
+drop table if exists LABRESULTS;
+CREATE TABLE LABRESULTS (
+	update_time    TIMESTAMP,
+	MRN            integer PRIMARY KEY not null,
+	DATE_COLLECTED VARCHAR(40) not null,
+	CHOLESTEROL    integer,
+	FASTING_SUGAR  integer,
+	DIAGNOSES      VARCHAR(200) not null,
+	REASON         VARCHAR(200) not null
+);
+
+drop table if exists RADRESULTS;
+CREATE TABLE RADRESULTS (
+	update_time    TIMESTAMP,
+	MRN            integer PRIMARY KEY not null,
+	DATE_SCHED     VARCHAR(40) not null,
+	XRAY           VARCHAR(40) not null, 
+	MRI            VARCHAR(40) not null,
+	DIAGNOSES      VARCHAR(200) not null,
+	REASON         VARCHAR(200) not null
+);
