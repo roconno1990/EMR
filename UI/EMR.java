@@ -70,44 +70,26 @@ public class EMR {
       frame.getContentPane().add(panel_2);
 
       JButton patSearch = new JButton("Patient Search");
-      JButton visit = new JButton("Visit");
-      JButton regInfo = new JButton("Registration");
-      JButton patTrack = new JButton("Patient tracker");
-      JButton phyExam = new JButton("Physical Exam");
-      JButton meds = new JButton("Medication");
-      JButton orders = new JButton("Orders");
+      JButton visit = new JButton("Patient Visit");
       JButton labRes = new JButton("Lab Results");
       JButton radRes = new JButton("Radiology Results");
       JButton asess = new JButton("Asessment");
-      JButton probList = new JButton("Problem List");
       JButton diag = new JButton("Diagnoses");
       JButton vital = new JButton("Vital Signs");
-      JButton addRemove = new JButton("Add/Remove Patient");
       JButton patientInfo = new JButton("Patient Information");
-      JButton physRep = new JButton("Physician Reports");
-      JButton inbox = new JButton("Inbox");
-      JButton complaints = new JButton("Complaints");
       JButton allergy = new JButton("Allergies");
+      JButton dischargeButt = new JButton("Patient Discharge");
 
       panel_2.add(patSearch);
       panel_2.add(visit);
-      panel_2.add(regInfo);
-      panel_2.add(patTrack);
-      panel_2.add(phyExam);
+      panel_2.add(dischargeButt);
       panel_2.add(allergy);
-      panel_2.add(meds);
-      panel_2.add(orders);
       panel_2.add(labRes);
       panel_2.add(radRes);
       panel_2.add(asess);
-      panel_2.add(probList);
       panel_2.add(diag);
       panel_2.add(vital);
-      panel_2.add(addRemove);
       panel_2.add(patientInfo);
-      panel_2.add(physRep);
-      panel_2.add(inbox);
-      panel_2.add(complaints);
 
       JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
       tabbedPane_1.setBounds(220, 67, 1735, 920);
@@ -124,6 +106,18 @@ public class EMR {
 
       Vitals vitals = new Vitals( tabbedPane_1 );
       vital.addActionListener(vitals);
+
+      Assessment notes = new Assessment( tabbedPane_1 );
+      asess.addActionListener( notes );
+
+      Discharge discharge = new Discharge( tabbedPane_1 );
+      dischargeButt.addActionListener(discharge);
+
+      LabResults labResults = new LabResults( tabbedPane_1 );
+      labRes.addActionListener(labResults);
+
+      RadResults radResults = new RadResults( tabbedPane_1 );
+      radRes.addActionListener(radResults);
 
       PatientInfo patInfAct = new PatientInfo( tabbedPane_1,
     		                                   "",
