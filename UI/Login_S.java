@@ -8,10 +8,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import UI.EMR;
+import base.DBBase;
+import base.DBConnect;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -83,35 +89,46 @@ public class Login_S {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
+				DBConnect con = new DBConnect();
+				DBBase data = new DBBase();
 				String password = txtPassword.getText();	
 				String username = txtUsername.getText();
+				boolean success = con.initialise("root", "password");
 				
 				while (attempts!=0)
 				{
-				if (password.contains("one") && username.contains("EMR")) {
+					Map<String, Object> keyMap = new HashMap<String, Object>();
+					keyMap.put("username", username);
+					List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+					rows = data.retrieve(con.getConnection(), "user", keyMap);
+					String pass = data.getStringField(rows, "PASSWORD");
+
+					if (rows.size() > 0 &&
+						pass.equals(password) ) {
+						
+						txtPassword.setText(null);
+						txtUsername.setText(null);
+						
+						EMR info = new EMR();
+						EMR.main(null);
+					}
 					
-					txtPassword.setText(null);
-					txtUsername.setText(null);
-					
-					EMR info = new EMR();
-					EMR.main(null);
+					else
+					{
+						attempts--; 
+						JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+						txtPassword.setText(null);
+						txtUsername.setText(null);
+					}
+					return;
 				}
-				
-				else
-				{
-					attempts--; 
-					JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
-					txtPassword.setText(null);
-					txtUsername.setText(null);
-				}
-				return;
-			}
 				if (attempts==0)
 				{
 					JOptionPane.showMessageDialog(frame, "Too Many Failed Attempts");
 					System.exit(0);
 				}
+				con.closeConnection();
 		}});
 		btnLogin.setBounds(101, 365, 97, 25);
 		frame.getContentPane().add(btnLogin);
