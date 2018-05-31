@@ -1,8 +1,16 @@
 package base;
 		
 import java.sql.DriverManager;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.apache.http.auth.Credentials;
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.services.storage.Storage;
+
 
 public class DBConnect
 {
@@ -32,9 +40,10 @@ public class DBConnect
         if( success )
         {
         	try
-    		{
+    		{     
+        		String jdbcUrl = "jdbc:mysql://35.226.84.132:3306/EMR?user=root&password=password";
     			connection =
-    			    DriverManager.getConnection( "jdbc:mysql://localhost:3306/EMR",
+    			    DriverManager.getConnection( jdbcUrl,
     				                             username,
     				                             password );
     		}

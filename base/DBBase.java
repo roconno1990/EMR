@@ -173,11 +173,86 @@ public class DBBase
 		}
 		catch( SQLException e )
 		{
-			System.out.println("Exception caught insdie delete!");
+			System.out.println("Exception caught inside retrieve!");
 			e.printStackTrace();
 		}
 
 		return dataList;
+	}
+
+	public String getStringField( List<Map<String, Object>> fieldList,
+			                      String fieldName)
+	{
+		String fieldValue = "";
+
+		for(int i = 0; i < fieldList.size(); i++)
+		{
+			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
+			{
+				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				{
+					fieldValue = (String) entry.getValue();
+					break;
+				}
+			}
+
+			if( !fieldValue.equals("") )
+			{
+				break;
+			}
+		}
+
+		return fieldValue;
+	}
+
+	public Integer getIntegerField( List<Map<String, Object>> fieldList,
+                                    String fieldName)
+	{
+		Integer fieldValue = 0;
+			
+		for(int i = 0; i < fieldList.size(); i++)
+		{
+			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
+			{
+				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				{
+					fieldValue = (Integer) entry.getValue();
+					break;
+				}
+			}
+			
+			if( !fieldValue.equals("") )
+			{
+				break;
+			}
+		}
+			
+			return fieldValue;
+	}
+	
+	public Double getDoubleField( List<Map<String, Object>> fieldList,
+                                   String fieldName)
+	{
+		Double fieldValue = 0.0;
+
+		for(int i = 0; i < fieldList.size(); i++)
+		{
+			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
+			{
+				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				{
+					fieldValue = (Double) entry.getValue();
+					break;
+				}
+			}
+
+			if( !fieldValue.equals("") )
+			{
+				break;
+			}
+		}
+
+		return fieldValue;
 	}
 
 	public java.sql.Timestamp getCurrentTimeStamp()
