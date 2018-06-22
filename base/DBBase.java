@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 public class DBBase
 {
@@ -178,6 +181,66 @@ public class DBBase
 		}
 
 		return dataList;
+	}
+
+	public ResultSet query( Connection con,
+	                        String tableName,
+	                        Map<String, Object> keyMap )
+	{
+		StringBuilder select = new StringBuilder();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+	
+		try
+		{
+			select.append("SELECT * FROM ");
+			select.append(tableName.toUpperCase());
+			select.append(" ").append("WHERE ");
+		
+			for( Map.Entry<String, Object> entry : keyMap.entrySet() )
+			{
+				select.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				select.append(" AND ");
+			}
+			select = new StringBuilder(select.subSequence(0, select.length() - 5));
+		
+			preparedStatement = con.prepareStatement(select.toString());
+		
+			rs = preparedStatement.executeQuery();
+		}
+		catch( SQLException e )
+		{
+			System.out.println("Exception caught inside retrieve!");
+			e.printStackTrace();
+		}
+	
+		return rs;
+	}
+
+	public DefaultTableModel fitToTable( ResultSet rs ) throws SQLException
+	{
+		ResultSetMetaData metaData = rs.getMetaData();
+
+	    // names of columns
+	    Vector<String> columnNames = new Vector<String>();
+	    int columnCount = metaData.getColumnCount();
+	    for (int column = 1; column <= columnCount; column++)
+	    {
+	        columnNames.add(metaData.getColumnName(column));
+	    }
+
+	    // data of the table
+	    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	    while (rs.next())
+	    {
+	        Vector<Object> vector = new Vector<Object>();
+	        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+	            vector.add(rs.getObject(columnIndex));
+	        }
+	        data.add(vector);
+	    }
+
+	    return new DefaultTableModel(data, columnNames);
 	}
 
 	public String getStringField( List<Map<String, Object>> fieldList,
