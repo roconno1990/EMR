@@ -257,9 +257,10 @@ public class EMR_Admin {
 				panel.add(lblTitle);
 				
 				JComboBox<String> comboBox = new JComboBox<>();
-				comboBox.addItem("Registration Clerk");
-				comboBox.addItem("Physician");
-				comboBox.addItem("Nurse");
+				comboBox.addItem("REGISTRATION");
+				comboBox.addItem("PHYSICIAN");
+				comboBox.addItem("NURSE");
+				comboBox.addItem("ADMIN");
 				comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
 				comboBox.setBounds(205, 23, 251, 22);
 				panel.add(comboBox);
@@ -337,6 +338,13 @@ public class EMR_Admin {
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
+							
+							textFName.setText("");
+							textLName.setText("");
+							textEID.setText("");
+							textAddress.setText("");
+							textUsername.setText("");
+							textPassword.setText("");
 						}
 					}
 					
@@ -445,6 +453,7 @@ public class EMR_Admin {
 					String userID = model.getValueAt(rows[i], 0).toString();
 					Map<String, Object> delMap = new HashMap<String, Object>();
 					delMap.put("user_id", userID);
+					data.delete(con.getConnection(), "user_info", delMap);
 					data.delete(con.getConnection(), "user", delMap);
 					
 					ResultSet rs = data.query(con.getConnection(), "user", Collections.emptyMap());

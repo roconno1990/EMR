@@ -103,6 +103,7 @@ public class Login_S {
 					List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 					rows = data.retrieve(con.getConnection(), "user", keyMap);
 					String pass = data.getStringField(rows, "PASSWORD");
+					String role = data.getStringField(rows, "ROLE");
 
 					if (rows.size() > 0 &&
 						pass.equals(password) ) {
@@ -110,8 +111,30 @@ public class Login_S {
 						txtPassword.setText(null);
 						txtUsername.setText(null);
 						
-						EMR info = new EMR();
-						EMR.main(null);
+						switch(role)
+						{
+							case "NURSE":
+								EMR_Nurse info = new EMR_Nurse();
+								EMR_Nurse.main(null);
+								break;
+							case "PHYSICIAN":
+								Physi physician = new Physi();
+								physician.open();
+								Physi.main(null);
+								break;
+							case "ADMIN":
+								EMR_Admin adminInfo = new EMR_Admin();
+								EMR_Admin.main(null);
+								break;
+							case "REGISTRATION":
+								Registration regInfo = new Registration();
+								Registration.main(null);
+								break;
+						    default:
+						    	JOptionPane.showMessageDialog(null, "Invalid User Setup", "User Login Error", JOptionPane.ERROR_MESSAGE);
+						    	break;
+						}
+						
 					}
 					
 					else
