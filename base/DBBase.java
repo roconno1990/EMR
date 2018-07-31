@@ -28,7 +28,7 @@ public class DBBase
 	
 			for( Map.Entry<String, Object> entry : fieldMap.entrySet() )
 			{
-				insert.append(entry.getKey().toUpperCase());
+				insert.append(entry.getKey());
 				insert.append(",");
 			}
 			insert = new StringBuilder(insert.subSequence(0, insert.length() - 1));
@@ -75,7 +75,7 @@ public class DBBase
 	
 			for( Map.Entry<String, Object> entry : fieldMap.entrySet() )
 			{
-				delete.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				delete.append(entry.getKey()).append("=").append("'").append(entry.getValue()).append("'");
 				delete.append(" AND ");
 			}
 			delete = new StringBuilder(delete.subSequence(0, delete.length() - 5));
@@ -108,7 +108,7 @@ public class DBBase
 	
 			for( Map.Entry<String, Object> entry : updateFields.entrySet() )
 			{
-				update.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				update.append(entry.getKey()).append("=").append("'").append(entry.getValue()).append("'");
 				update.append(",");
 			}
 			update = new StringBuilder(update.subSequence(0, update.length() - 1));
@@ -116,7 +116,7 @@ public class DBBase
 			update.append(" ").append("WHERE ");
 			for( Map.Entry<String, Object> entry : keyMap.entrySet() )
 			{
-				update.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				update.append(entry.getKey()).append("=").append("'").append(entry.getValue()).append("'");
 				update.append(" AND ");
 			}
 			update = new StringBuilder(update.subSequence(0, update.length() - 5));
@@ -149,7 +149,7 @@ public class DBBase
 	
 			for( Map.Entry<String, Object> entry : keyMap.entrySet() )
 			{
-				select.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				select.append(entry.getKey()).append("=").append("'").append(entry.getValue()).append("'");
 				select.append(" AND ");
 			}
 			select = new StringBuilder(select.subSequence(0, select.length() - 5));
@@ -199,7 +199,7 @@ public class DBBase
 		
 			for( Map.Entry<String, Object> entry : keyMap.entrySet() )
 			{
-				select.append(entry.getKey().toUpperCase()).append("=").append("'").append(entry.getValue()).append("'");
+				select.append(entry.getKey()).append("=").append("'").append(entry.getValue()).append("'");
 				select.append(" AND ");
 			}
 			select = new StringBuilder(select.subSequence(0, select.length() - 5));
@@ -210,10 +210,46 @@ public class DBBase
 		}
 		catch( SQLException e )
 		{
-			System.out.println("Exception caught inside retrieve!");
+			System.out.println("Exception caught inside query!");
 			e.printStackTrace();
 		}
 	
+		return rs;
+	}
+
+	public ResultSet partialQuery( Connection con,
+                                   String tableName,
+                                   Map<String, Object> keyMap )
+	{
+		StringBuilder select = new StringBuilder();
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			select.append("SELECT * FROM ");
+			select.append(tableName.toUpperCase());
+			select.append(" ").append("WHERE ");
+			
+			for( Map.Entry<String, Object> entry : keyMap.entrySet() )
+			{
+				select.append(entry.getKey());
+				select.append(" LIKE ");
+				select.append("'").append(entry.getValue()).append("%").append("'");
+				select.append(" OR ");
+			}
+			select = new StringBuilder(select.subSequence(0, select.length() - 4));
+			
+			preparedStatement = con.prepareStatement(select.toString());
+			
+			rs = preparedStatement.executeQuery();
+		}
+		catch( SQLException e )
+		{
+			System.out.println("Exception caught inside partialQuery!");
+			e.printStackTrace();
+		}
+		
 		return rs;
 	}
 
@@ -250,16 +286,21 @@ public class DBBase
 
 		for(int i = 0; i < fieldList.size(); i++)
 		{
+			boolean foundField = false;
 			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
 			{
-				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				if( fieldName.equals(entry.getKey()) )
 				{
-					fieldValue = (String) entry.getValue();
+					foundField = true;
+					if( entry.getValue() != null)
+					{
+						fieldValue = (String) entry.getValue();
+					}
 					break;
 				}
 			}
 
-			if( !fieldValue.equals("") )
+			if( foundField )
 			{
 				break;
 			}
@@ -277,7 +318,7 @@ public class DBBase
 		{
 			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
 			{
-				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				if( fieldName.equals(entry.getKey()) )
 				{
 					fieldValue = (Integer) entry.getValue();
 					break;
@@ -302,7 +343,7 @@ public class DBBase
 		{
 			for( Map.Entry<String, Object> entry : fieldList.get(i).entrySet() )
 			{
-				if( fieldName.equals(entry.getKey().toUpperCase()) )
+				if( fieldName.equals(entry.getKey()) )
 				{
 					fieldValue = (Double) entry.getValue();
 					break;
