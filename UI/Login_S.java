@@ -102,8 +102,8 @@ public class Login_S {
 					keyMap.put("username", username);
 					List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 					rows = data.retrieve(con.getConnection(), "user", keyMap);
-					String pass = data.getStringField(rows, "PASSWORD");
-					String role = data.getStringField(rows, "ROLE");
+					String pass = data.getStringField(rows, "password");
+					String role = data.getStringField(rows, "role");
 
 					if (rows.size() > 0 &&
 						pass.equals(password) ) {
